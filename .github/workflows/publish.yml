@@ -31,7 +31,7 @@ jobs:
   
     needs: [check_version, ci]
     if: needs.check_version.outputs.version_changed == 'true'
-    uses: Abaddax/workflows/.github/workflows/dotnet.publish_nuget.yml
+    uses: Abaddax/workflows/.github/workflows/dotnet.publish_nuget.yml@master
     with:
       CSPROJ_PATH: ${{ env.CSPROJ_PATH }}
     permissions:
