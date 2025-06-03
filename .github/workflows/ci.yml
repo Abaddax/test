@@ -12,4 +12,4 @@ on:
 jobs:
   build:
     
-    uses: Abaddax/workflows/.github/workflows/dotnet.build_and_test.yml@main
+    uses: Abaddax/workflows/.github/workflows/dotnet.build_and_test.yml@master
