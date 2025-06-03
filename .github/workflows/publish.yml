@@ -15,11 +15,23 @@ env:
 
 jobs:
 
+  env_info:
+    name: Setup environment variables
+    runs-on: ubuntu-latest
+    outputs:
+      CSPROJ_PATH: ${{ steps.copy.outputs.CSPROJ_PATH }}
+    steps:
+      - name: Copy environment variables
+        id: copy
+        run: |    
+          echo "CSPROJ_PATH=$CSPROJ_PATH" >> "$GITHUB_OUTPUT"
+
   check_version:
     
+    needs: [env_info]
     uses: Abaddax/workflows/.github/workflows/dotnet.check_version.yml@master
     with:
-      CSPROJ_PATH: ${{ env.CSPROJ_PATH }}
+      CSPROJ_PATH: ${{ needs.env_info.outputs.CSPROJ_PATH }}
 
   ci:
     
@@ -29,11 +41,11 @@ jobs:
   
   publish:
   
-    needs: [check_version, ci]
+    needs: [env_info, check_version, ci]
     if: needs.check_version.outputs.version_changed == 'true'
     uses: Abaddax/workflows/.github/workflows/dotnet.publish_nuget.yml@master
     with:
-      CSPROJ_PATH: ${{ env.CSPROJ_PATH }}
+      CSPROJ_PATH: ${{ needs.env_info.outputs.CSPROJ_PATH }}
     permissions:
       contents: write
     secrets:
