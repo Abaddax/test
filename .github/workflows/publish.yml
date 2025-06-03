@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  CSPROJ_PATH: Abaddax.Utilities/Abaddax.Utilities.csproj
+  CSPROJ_PATH: Test/Test.csproj
 
 jobs:
 
